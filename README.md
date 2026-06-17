@@ -1,198 +1,67 @@
-# Happy Vienna 🏥
+# 🏥 幸福維也納 (Happy Vienna) — 家庭生活秩序與自動化系統
 
-**A personal health companion app for tracking vital signs, medical appointments, and daily wellness goals.**
+這是我在工作之餘，為了解決自己家裡（四口人、皆為 Android 裝置）在健康追蹤、生活物資庫存以及信用卡優惠疊加時常遇到的記憶落差與不確定性，從零開始規劃並動工的原生 Android App。
 
-> *A portfolio project developed during leisure time to demonstrate full-stack capabilities in Android development, IoT integration, and embedded systems.*
-
----
-
-## 🎯 Project Overview
-
-Happy Vienna is an Android health management application designed to help users organize and track their medical data in one place. The app demonstrates a holistic approach to personal health management by integrating:
-
-- **Vital Signs Monitoring** – Blood pressure and heart rate tracking with timestamp records
-- **Medical Records Management** – Organized storage of medical appointments, department visits, and doctor notes
-- **Daily Goal Tracking** – Health reminders and habit tracking with support for automated BP measurements and manual checks
-- **IoT Integration** – BLE connectivity for seamless data collection from wearable devices (in progress)
+目前專案已完成約 30% 的核心地基（包含 Navigation 骨架、底層 Room 資料庫定義、血壓暫存面板設計），其餘高階功能已完成完整的系統架構與資料流規劃。
 
 ---
 
-## 🚀 Technical Highlights
+## 💡 真實生活場景
 
-### Architecture & Best Practices
-- **Modern Android Stack**: Built with Android 36 (latest Gradle 9.0.1)
-- **Room Database**: Type-safe local data persistence with SQLite backend
-- **Material Design 3**: Native Android components for intuitive UI/UX
-- **Fragment-based Navigation**: Multi-tab bottom navigation with proper state management
-- **Java 17**: Leveraging latest language features for cleaner, more maintainable code
+市場上很多健康或記帳 App 功能都很單一，對長輩來說操作階層太深、學習門檻高。我自己開發這個專案，核心目的就是讓「數據互通」，用軟體邏輯去分擔家人的記憶成本。
 
-### Key Technical Features
-| Component | Technology | Purpose |
-|-----------|-----------|---------|
-| Database | AndroidX Room + SQLite | Structured data persistence with query abstraction |
-| UI Framework | Material Design + ConstraintLayout | Responsive, modern interface |
-| Navigation | Fragment + Bottom Navigation | Smooth multi-screen experience |
-| Testing | JUnit + Espresso | Unit and instrumentation testing support |
-| Build System | Gradle with Version Catalog | Centralized dependency management |
+### 1. 醫療紀錄語意檢索與跨裝置通知
+*   **真實狀況**：長輩常記不清楚以前的醫囑細節（例如：「醫生上次說左邊還是右邊有一個小突起？」），去醫院時也難以提供精確的日常數據。
+*   **設計想法**：
+    *   **科別分類與模糊搜尋**：不搞複雜的人體地圖介面（避免讓長輩產生全身是病的焦慮），直接回歸醫院分科。支援「左邊」、「突起」等日常詞彙搜尋，直接調出當次的回診筆記與檢驗照片。
+    *   **預見性集體提醒**：如果隔天早上 8 點要抽血禁食，系統會在**前一天下午 3 點**就發送通知給全家人，提醒晚餐要吃飽一點；午夜 12 點一到，全家人的手機同步進入禁食監控狀態，看到他想拿東西吃時就能即時阻止。
 
----
+### 2. 「類似寫紙本」的血壓會話暫存機制
+*   **真實狀況**：長輩量血壓常因為追求漂亮數字，會連續量很多次直到滿意為止。如果系統死板地限制一天只能記一次，或把所有量測數據都存進去，前者會讓他們放棄使用改回紙本，後者會污染資料庫。
+*   **設計想法**：
+    *   **20 分鐘緩衝期**：點開血壓按鈕後是三個巨大、強制跳轉的數字輸入框。20 分鐘內允許長輩無限次新增，畫面會條列出這期間所有的量測紀錄（例如 `120 / 80 / 70`，視覺完全中性，不論高低都不用紅色警示，避免引發焦慮）。
+    *   **自主登記**：由長輩自己勾選哪一筆代表今天的狀態，按下「登記」後，其餘筆數在記憶體中直接拋棄，不留存也不進資料庫，完全符合他們用傳統紙本塗改的習慣。
 
-## 📋 Data Models
+### 3. 物資庫存倒數與物流透明化
+*   **真實狀況**：保健食品或沐浴乳常吃到剩最後兩顆才被口頭告知，來不及補貨時就會引發長輩的斷貨焦慮。
+*   **設計想法**：
+    *   **天數倒數機制**：由後台「總量 / 每日消耗」自動推算可支撐天數。低於 14 天自動轉黃燈提醒我補貨，低於 7 天轉紅燈。
+    *   **進度透明化**：我下單後上傳物流單號，長輩的手機首頁會顯示「預計抵達日期」進度條。商品到貨簡訊被系統偵測到後，首頁直接跳大字提示，讓他看得到進度，不再一直追問。
 
-The app manages three core data entities:
-
-1. **DailyGoal** – Track health reminders and habits
-   - Goal name, completion status, timestamps
-   - Support for automated (BP, NFC) and manual tracking
-
-2. **MedicalRecord** – Comprehensive medical visit records
-   - Department information, doctor notes, appointment scheduling
-   - Fasting requirements, visibility controls, sync capabilities
-
-3. **TempBPRecord** – Vital signs data points
-   - Blood pressure (systolic/diastolic), heart rate
-   - Time-stamped measurements for trend analysis
+### 4. 信用卡與限時活動的無感疊加
+*   **真實狀況**：家裡四個人各有不同的信用卡，每張卡的常態強項（如高鐵、網購）與限時加碼額度上限都不同，要消費時人工比價非常沒效率。
+*   **設計想法**：
+    *   **簡訊自動對帳**：App 讀取銀行刷卡簡訊，自動累計並扣除各卡當月的回饋額度。
+    *   **活動網址解析**：貼上任何限時活動網址（如：悠遊付限時回饋），後台提取時效與門檻。當準備買高鐵票時，系統直接動態疊加「常態 + 限時」，給出當下最划算的唯一刷卡組合，對長輩隱藏複雜的計算過程。
 
 ---
 
-## 🔄 IoT & Hardware Integration (In Development)
+## 🛠️ 技術棧與防禦性規劃 (Technical Highlights)
 
-This project is part of a **Dual-CPU embedded system** integration:
-- **CM4 Bluetooth LE**: Advertising health device services via BLE 5.x protocol
-- **Temperature/Health Sensors**: Real-time data collection from IoT peripherals
-- **Incremental Development**: Following a structured 3-stage integration approach
-  1. BLE library integration and build stability
-  2. Device discovery and advertising verification
-  3. GATT services and characteristic read/write operations
+為了確保對系統 Lifecycle 的絕對掌控，並達到零維護成本，專案採取了以下架構：
 
----
-
-## 🛠️ Development Setup
-
-### Prerequisites
-- Android Studio (Flamingo or later)
-- JDK 17+
-- Android SDK 36 (target), SDK 26+ (minimum)
-
-### Build & Run
-```bash
-# Clone the repository
-git clone https://github.com/[username]/HappyVienna.git
-cd HappyVienna
-
-# Build the project
-./gradlew clean build
-
-# Run on emulator/device
-./gradlew installDebug
-```
-
-### Project Structure
-```
-HappyVienna/
-├── app/
-│   ├── src/main/java/com/peggy/happyvienna/
-│   │   ├── data/
-│   │   │   ├── entity/          # Room database entities
-│   │   │   ├── dao/             # Data access objects
-│   │   │   └── model/           # UI/ViewModel models
-│   │   ├── MainActivity.java    # Tab navigation controller
-│   │   ├── HomeFragment.java    # Main dashboard
-│   │   └── HappyViennaApp.java  # Application initialization
-│   └── build.gradle             # Module dependencies
-├── gradle/
-│   └── libs.versions.toml       # Centralized version management
-└── build.gradle                 # Project-level configuration
-```
+*   **前端開發**：Android Native (Java/Kotlin, JDK 17)，介面採用 Material Design 3。
+*   **視覺規範**：扁平化分頁、滿版橫條大按鈕（高度 60dp+）、大字體（20sp+）。
+*   **全域嚴禁使用紫色**（維持深藍與森林綠的穩定視覺感）。
+*   **本地快取**：採用 AndroidX Room Database，確保在離線狀態下依然能讀取 Last Known State。
+*   **雲端同步**：串接 Firebase Realtime Database 與 FCM，處理四人手機間的即時資料同步與跨裝置廣播，其免費額度對家庭單位來說完全零成本。
+*   **隱私與資產隔離**：金庫模組（Wi-Fi 密碼、搶票帳密）與隱私分頁（個人身心科行程、私人物資支出）強制進行生物辨識（指紋/面容）二次驗證，且在 Android 底層開啟 `FLAG_SECURE` 防止敏感頁面被截圖。
 
 ---
 
-## 📊 Code Quality
+## 📊 資料模型設計藍圖 (Data Schema)
 
-- **Type Safety**: Full Java 17 implementation with no null pointer surprises
-- **Separation of Concerns**: Clean entity/DAO/UI layer architecture
-- **Resource Management**: Proper lifecycle handling with savedInstanceState persistence
-- **Dependency Injection**: Room database auto-configuration
-- **Testing Framework**: JUnit + Espresso test harness integrated
+底層透過 `visibility` 欄位（區分 `FAMILY` / `PRIVATE`）嚴格執行隱私隔離：
 
----
-
-## 🎓 Learning Outcomes
-
-This project demonstrates:
-
-✅ **Full Android Development Lifecycle**
-- UI design and implementation (Material Design)
-- Local database design and optimization
-- Fragment lifecycle and state management
-
-✅ **Software Engineering Practices**
-- Version-controlled development with Git
-- Gradle-based build automation
-- Structured component architecture
-
-✅ **Embedded Systems Integration**
-- BLE (Bluetooth Low Energy) protocol implementation
-- Real-time sensor data collection
-- Multi-threaded device communication
-
-✅ **Cross-platform Capability**
-- Android app development
-- IoT/embedded firmware integration (CM0/CM4)
-- End-to-end health data pipeline
+1.  **DailyGoal**：包含自動化勾選項目（血壓登記成功後自動打勾）與手動代辦事項（如手機充電）。每天午夜 00:00 根據系統時間自動重設。
+2.  **MedicalRecord**：紀錄醫院科別、醫囑備註、是否禁食與供模糊搜尋的關鍵字 Tag。
+3.  **InventoryItem**：庫存品項，規劃與實體藥罐的 NFC Tag 聯動，手機靠過去「嗶」一下自動扣庫存，並具備 2 小時內重複感應攔截機制。
+4.  **SecureVault**：共用帳密與實體資產位置紀錄（如：備用印章拍照記錄存放位置）。
 
 ---
 
-## 🔐 Privacy & Compliance
+## 💡 寫在最後（給面試官的話）
 
-- **Local Storage First**: All health data stored locally on device by default
-- **Visibility Controls**: Granular privacy settings per medical record
-- **No Cloud Dependency**: Designed for privacy-conscious health tracking
-- **Future-Ready**: Sync infrastructure prepared for optional secure cloud backup
+這個專案對我來說，有趣的地方不在於寫了多少複雜的 CRUD 程式碼，而是**「如何把現實生活中非結構化的混亂需求，收斂成嚴謹的系統邏輯」**。
 
----
-
-## 📈 Future Enhancements
-
-- [ ] Complete BLE integration for automatic BP device reading
-- [ ] Health data visualization and trend analysis
-- [ ] Multi-language support (EN, ZH-TW)
-- [ ] Cloud sync with end-to-end encryption
-- [ ] Wearable integration (Wear OS)
-- [ ] Export medical records (PDF/CSV)
-
----
-
-## 💼 Portfolio Highlights for Interviewers
-
-**Why I Built This:**
-During leisure time, I wanted to create a real-world application that solves an actual problem—helping people manage their health data. This project goes beyond a simple CRUD app:
-
-- **Full-stack thinking**: App → Database → IoT Hardware integration
-- **Production mindset**: State management, lifecycle handling, error recovery
-- **Hardware integration**: Not just app development; exploring embedded systems and IoT protocols
-- **Continuous learning**: Latest Android APIs (Gradle 9.0, Material 3, Java 17) and industry standards
-
-**Technical Depth:**
-This isn't a tutorial project. It demonstrates:
-- Understanding of mobile architecture patterns
-- Database schema design for real-world scenarios
-- Integration with hardware systems (BLE/sensors)
-- Professional code organization and practices
-
----
-
-## 📝 License
-
-This project is provided as-is for portfolio demonstration purposes.
-
----
-
-## 📬 Contact
-
-Questions about the project? Feel free to reach out or review the git commit history for development decisions.
-
----
-
-**Last Updated**: June 2026  
-**Status**: Active Development (IoT Integration Phase)
+在系統設計上，我把 AI 當作高效率的「自動填表機」，貼上網址解析後會先跳出 BottomSheet 讓人類進行確認與修改（Human-in-the-loop），主動攔截 AI 幻覺，確保進入 Room 資料庫的都是純淨數據。同時，架構設計上也提早預防了 Android 旋轉螢幕的狀態恢復、跨執行緒寫入時的快取鎖死風險。這是一個我用工程師的思維，為家裡量身打造的數位防禦系統。
