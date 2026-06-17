@@ -1,0 +1,22 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <!-- 將預設主題改為 NoActionBar，由我們自己控制頂部佈局 -->
+    <style name="Base.Theme.HappyVienna" parent="Theme.Material3.DayNight.NoActionBar">
+
+        <!-- 覆蓋主要顏色 (頂部狀態列、主要按鈕) -->
+        <item name="colorPrimary">@color/theme_primary_dark_blue</item>
+
+        <!-- 覆蓋次要顏色 -->
+        <item name="colorSecondary">@color/theme_aot_green</item>
+
+        <!-- 【防禦核心】覆蓋 Bottom Navigation 的預設紫色橢圓底色 -->
+        <item name="colorSecondaryContainer">@color/theme_aot_green_light</item>
+
+        <!-- 【防禦核心】當橢圓底色出現時，裡面的 Icon 與文字顏色 -->
+        <item name="colorOnSecondaryContainer">@color/theme_aot_green</item>
+
+        <!-- 強制將頂端狀態列改為 FB 深藍色 -->
+        <item name="android:statusBarColor">@color/theme_primary_dark_blue</item>
+    </style>
+
+    <style name="Theme.HappyVienna" parent="Base.Theme.HappyVienna" />
+</resources>

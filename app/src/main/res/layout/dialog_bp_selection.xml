@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="16dp"
+    android:background="@color/background_light_grey">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginTop="24dp"
+        android:layout_marginBottom="12dp">
+
+        <TextView
+            android:id="@+id/tv_current_date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="11/05"
+            android:textColor="@color/theme_primary_dark_blue"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:layout_marginEnd="8dp"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="暫存紀錄 (20分鐘內)"
+            android:textColor="@color/text_secondary_grey"
+            android:textSize="16sp" />
+    </LinearLayout>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:layout_marginBottom="16dp">
+
+        <LinearLayout
+            android:id="@+id/layout_record_list"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical" />
+    </ScrollView>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:weightSum="3">
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btn_measure_again"
+            android:layout_width="0dp"
+            android:layout_height="60dp"
+            android:layout_weight="1"
+            android:layout_marginEnd="8dp"
+            android:text="新增"
+            app:backgroundTint="@color/theme_primary_dark_blue"
+            app:cornerRadius="8dp" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btn_register"
+            android:layout_width="0dp"
+            android:layout_height="60dp"
+            android:layout_weight="1"
+            android:layout_marginEnd="8dp"
+            android:text="登記"
+            android:enabled="false"
+            app:backgroundTint="@color/theme_aot_green"
+            app:cornerRadius="8dp" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btn_close"
+            style="@style/Widget.Material3.Button.OutlinedButton"
+            android:layout_width="0dp"
+            android:layout_height="60dp"
+            android:layout_weight="1"
+            android:text="關閉"
+            android:textColor="@color/text_primary_dark"
+            app:strokeColor="@color/text_secondary_grey"
+            app:cornerRadius="8dp" />
+    </LinearLayout>
+</LinearLayout>

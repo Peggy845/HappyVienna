@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/nav_home"
+        android:icon="@drawable/ic_launcher_foreground"
+        android:title="首頁" />
+    <item
+        android:id="@+id/nav_health"
+        android:icon="@drawable/ic_launcher_foreground"
+        android:title="醫療" />
+    <item
+        android:id="@+id/nav_finance"
+        android:icon="@drawable/ic_launcher_foreground"
+        android:title="帳務" />
+    <item
+        android:id="@+id/nav_inventory"
+        android:icon="@drawable/ic_launcher_foreground"
+        android:title="物資" />
+    <item
+        android:id="@+id/nav_vault"
+        android:icon="@drawable/ic_launcher_foreground"
+        android:title="金庫" />
+</menu>

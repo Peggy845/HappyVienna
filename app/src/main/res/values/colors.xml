@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="black">#000000</color>
+    <color name="white">#FFFFFF</color>
+
+    <!-- 核心主色調 -->
+    <color name="theme_primary_dark_blue">#063970</color> <!-- FB 穩定藍 -->
+    <color name="theme_alert_red">#d73a49</color> <!-- 警告紅 -->
+
+    <!-- 進擊的巨人：調查兵團綠色系 -->
+    <color name="theme_aot_green">#2A4F32</color> <!-- 兵團披風深綠 -->
+    <color name="theme_aot_green_light">#D4E0D7</color> <!-- 底部導航選取底色 (高對比度) -->
+
+    <!-- 背景與文字 -->
+    <color name="background_light_grey">#F5F6F8</color>
+    <color name="text_primary_dark">#1A1A1A</color>
+    <color name="text_secondary_grey">#666666</color>
+
+    <color name="theme_status_blue">#1A4B84</color>
+</resources>

@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="24dp"
+    android:background="@color/white">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="新增血壓紀錄"
+        android:textColor="@color/theme_primary_dark_blue"
+        android:textSize="22sp"
+        android:textStyle="bold"
+        android:layout_marginBottom="24dp" />
+
+    <!-- 數值輸入區 -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:weightSum="3"
+        android:baselineAligned="false">
+
+        <!-- 收縮壓 (高壓) -->
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_marginEnd="8dp"
+            app:boxBackgroundColor="@color/background_light_grey"
+            app:boxCornerRadiusTopStart="8dp"
+            app:boxCornerRadiusTopEnd="8dp"
+            android:hint="高壓">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/et_sys"
+                android:layout_width="match_parent"
+                android:layout_height="80dp"
+                android:textSize="24sp"
+                android:gravity="center"
+                android:inputType="number"
+                android:maxLength="3" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <!-- 舒張壓 (低壓) -->
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_marginEnd="8dp"
+            app:boxBackgroundColor="@color/background_light_grey"
+            app:boxCornerRadiusTopStart="8dp"
+            app:boxCornerRadiusTopEnd="8dp"
+            android:hint="低壓">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/et_dia"
+                android:layout_width="match_parent"
+                android:layout_height="80dp"
+                android:textSize="24sp"
+                android:gravity="center"
+                android:inputType="number"
+                android:maxLength="3" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <!-- 心跳 (脈搏) -->
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            app:boxBackgroundColor="@color/background_light_grey"
+            app:boxCornerRadiusTopStart="8dp"
+            app:boxCornerRadiusTopEnd="8dp"
+            android:hint="心跳">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/et_pulse"
+                android:layout_width="match_parent"
+                android:layout_height="80dp"
+                android:textSize="24sp"
+                android:gravity="center"
+                android:inputType="number"
+                android:maxLength="3" />
+        </com.google.android.material.textfield.TextInputLayout>
+    </LinearLayout>
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btn_confirm_input"
+        android:layout_width="match_parent"
+        android:layout_height="64dp"
+        android:layout_marginTop="32dp"
+        android:text="確認新增"
+        android:textSize="20sp"
+        app:backgroundTint="@color/theme_primary_dark_blue"
+        app:cornerRadius="8dp" />
+
+</LinearLayout>
